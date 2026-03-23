@@ -1,29 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
   <head>
-    <title><%= content_for(:title) || "Wiki" %></title>
+    <title><%= content_for(:title) || "维基" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Wiki">
-    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= yield :head %>
+    <%# LXGW WenKai (霞鹜文楷) %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
+    <%# Noto Sans SC for UI elements %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <div class="nav-left">
+          <%= link_to "維基", root_path, class: "nav-brand" %>
+          <%= link_to "全部页面", pages_path, class: "nav-link" %>
+        </div>
+        <div class="nav-right">
+          <% if authenticated? %>
+            <%= link_to "+ 新建页面", new_page_path, class: "btn-primary" %>
+            <%= button_to "退出", session_path, method: :delete, class: "btn-ghost" %>
+          <% else %>
+            <%= link_to "登录", new_session_path, class: "nav-link" %>
+            <%= link_to "注册", new_registration_path, class: "btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <% if notice %>
+        <div class="flash flash-notice"><%= notice %></div>
+      <% end %>
+      <% if alert %>
+        <div class="flash flash-alert"><%= alert %></div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+
+    <footer class="site-footer">
+      <span>维基 · 知识共建</span>
+    </footer>
   </body>
 </html>

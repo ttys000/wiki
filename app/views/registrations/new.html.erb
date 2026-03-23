@@ -1,0 +1,41 @@
+<% content_for :title, "注册 · 维基" %>
+
+<div class="auth-container">
+  <h1 class="auth-title">注册账号</h1>
+
+  <%= form_with model: @user, url: registration_path, class: "wiki-form" do |f| %>
+    <% if @user.errors.any? %>
+      <div class="form-errors">
+        <% @user.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :email_address, "邮箱" %>
+      <%= f.email_field :email_address, required: true, autofocus: true,
+            autocomplete: "username", placeholder: "your@email.com" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password, "密码" %>
+      <%= f.password_field :password, required: true,
+            autocomplete: "new-password", placeholder: "至少8位", maxlength: 72 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation, "确认密码" %>
+      <%= f.password_field :password_confirmation, required: true,
+            autocomplete: "new-password", placeholder: "再次输入密码" %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "创建账号", class: "btn-primary btn-full" %>
+    </div>
+  <% end %>
+
+  <p class="auth-footer">
+    已有账号？ <%= link_to "直接登录", new_session_path %>
+  </p>
+</div>

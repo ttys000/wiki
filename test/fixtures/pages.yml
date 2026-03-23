@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: 首页
+  slug: 首页
+  body: 欢迎来到维基！
+
+two:
+  title: 使用指南
+  slug: 使用指南
+  body: 本维基使用纯文本格式编写。

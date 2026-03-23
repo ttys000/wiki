@@ -1,9 +1,33 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+Page.find_or_create_by!(title: "首页") do |p|
+  p.body = <<~BODY
+    欢迎来到维基！
+
+    这是一个简单的知识共建平台。你可以在这里记录想法、整理知识、互相链接页面。
+
+    使用 [[页面标题]] 语法链接到其他页面。例如：
+
+    - [[使用指南]] — 了解如何编写页面
+    - [[Markdown 格式]] — 文字排版参考
+    - [[关于本站]] — 维基的背景与初衷
+
+    点击红色虚线链接，可以直接创建一个新页面。
+  BODY
+end
+
+Page.find_or_create_by!(title: "使用指南") do |p|
+  p.body = <<~BODY
+    本维基使用纯文本格式编写，支持以下功能：
+
+    链接语法
+
+    使用双方括号链接到其他页面：[[首页]]、[[关于本站]]。
+
+    如果目标页面尚未创建，链接将显示为红色虚线，点击后可立即新建该页面。
+
+    编辑权限
+
+    任何人均可阅读页面。登录后可以创建和编辑页面。
+
+    返回 [[首页]]
+  BODY
+end

@@ -1,0 +1,29 @@
+<%= form_with(model: page, url: page.new_record? ? pages_path : page_path(page), class: "wiki-form") do |f| %>
+  <% if page.errors.any? %>
+    <div class="form-errors">
+      <% page.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title, "标题" %>
+    <%= f.text_field :title, placeholder: "页面标题", autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :body, "内容" %>
+    <p class="field-hint">使用 <code>[[页面标题]]</code> 链接到其他页面</p>
+    <%= f.text_area :body, rows: 24, placeholder: "在这里写下内容……" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit page.new_record? ? "创建页面" : "保存修改", class: "btn-primary" %>
+    <% if page.persisted? %>
+      <%= link_to "取消", page_path(page), class: "btn-ghost" %>
+    <% else %>
+      <%= link_to "取消", root_path, class: "btn-ghost" %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,17 @@
+<% content_for :title, "#{@page.title} · 维基" %>
+
+<article class="wiki-article">
+  <header class="article-header">
+    <h1><%= @page.title %></h1>
+    <div class="article-meta">
+      <span>最后更新于 <%= @page.updated_at.strftime("%Y年%m月%d日") %></span>
+      <% if authenticated? %>
+        <%= link_to "编辑", edit_page_path(@page), class: "btn-ghost btn-sm" %>
+      <% end %>
+    </div>
+  </header>
+
+  <div class="article-body">
+    <%= render_wiki_body(@page.body) %>
+  </div>
+</article>

@@ -1,0 +1,28 @@
+<% content_for :title, "全部页面 · 维基" %>
+
+<div class="page-header">
+  <h1>全部页面</h1>
+  <% if authenticated? %>
+    <%= link_to "+ 新建页面", new_page_path, class: "btn-primary" %>
+  <% end %>
+</div>
+
+<% if @pages.any? %>
+  <ul class="page-list">
+    <% @pages.each do |page| %>
+      <li class="page-list-item">
+        <%= link_to page.title, page_path(page), class: "page-list-link" %>
+        <span class="page-list-meta"><%= page.updated_at.strftime("%Y年%m月%d日") %></span>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="empty-state">
+    <p>还没有页面。</p>
+    <% if authenticated? %>
+      <%= link_to "创建第一个页面", new_page_path, class: "btn-primary" %>
+    <% else %>
+      <%= link_to "登录后开始编辑", new_session_path, class: "btn-primary" %>
+    <% end %>
+  </div>
+<% end %>
