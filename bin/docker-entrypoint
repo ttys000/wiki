@@ -1,5 +1,12 @@
 #!/bin/bash -e
 
+# Fix storage directory permissions (volume may be root-owned on first mount),
+# then re-exec as the rails user via gosu.
+if [ "$(id -u)" = "0" ]; then
+  chown 1000:1000 /rails/storage
+  exec gosu rails "$0" "$@"
+fi
+
 # If running the rails server then create or migrate existing database
 if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
   ./bin/rails db:prepare
